@@ -20,10 +20,6 @@ String entrada ="0000";
 bool stringComplete = false; //whetherthestringiscomplete
 bool rotacion = false;
 
-
-
-
-
 void setup() {
   Serial.begin(115200);
   pinMode(4, INPUT);
@@ -34,19 +30,11 @@ void setup() {
   pinMode(9, OUTPUT);
   pinMode(10, OUTPUT);
   pinMode(11, OUTPUT);
+  Serial.println("Introduce una direcion en codigo Gray 1 o 0 en el formato xxxx");
 
   //reserve200bytesfortheinputString:
   inputString.reserve(200);
 }
-
-
-
-
-
-
-
-
-
 
 void loop() {
   posicion();
@@ -116,15 +104,6 @@ void loop() {
     }
 }
 
-
-
-
-
-
-
-
-
-
 //Captura de posicion
 void posicion() {
   pos[0] = analogRead(A3);
@@ -153,15 +132,6 @@ void posicion() {
     poc += pos[k];
   }
 }
-
-
-
-
-
-
-
-
-
 
 //Entrada de datos
 void serialEvent() {
