@@ -10,7 +10,7 @@ int pos[4];
 //String con la posicion de el encoder
 String poc="0000";
 //Margen de sensado
-int margen = 50;
+int margen = 30;
 //Tiempo entre pasos
 int espera = 2;
 //String que guarda los datos enviados
@@ -38,21 +38,26 @@ void setup() {
 
 void loop() {
   posicion();
-  Serial.print(".");
+  Serial.print("Posicion a mantener: ");
   Serial.print(entrada);
-  Serial.print(".");
-  Serial.print("   ");
-  Serial.print(analogRead(A1));
-  Serial.print("    ");
-  Serial.print(pos[0]);
   Serial.print(" ");
-  Serial.print(pos[1]);
-  Serial.print(" ");
-  Serial.print(pos[2]);
-  Serial.print(" ");
-  Serial.print(pos[3]);
-  Serial.print("        ");
-  Serial.print(".");
+  Serial.print("Posicion actual: ");
+//  Serial.print(pos[0]);
+//  Serial.print(" ");
+//  Serial.print(pos[1]);
+//  Serial.print(" ");
+//  Serial.print(pos[2]);
+//  Serial.print(" ");
+//  Serial.print(pos[3]);
+//  Serial.print("        ");
+//  Serial.print(analogRead(A0));
+//  Serial.print(" ");
+//  Serial.print(analogRead(A1));
+//  Serial.print("   ");
+//  Serial.print(analogRead(A2));
+//  Serial.print(" ");
+//  Serial.print(analogRead(A3));
+//  Serial.print(".");
   Serial.print(poc);
   Serial.println(".");
 
