@@ -8,7 +8,7 @@ int steps[4][4] = {
 
 int pos[4]; //Matriz con la posicion de el encoder
 String poc="0000";  //String con la posicion de el encoder
-int margen = 100; //Margen de sensado
+int margen = 300; //Margen de sensado
 int espera = 2; //Tiempo entre pasos
 String inputString = "";  //String que guarda los datos enviados
 String entrada ="0000";
@@ -16,7 +16,6 @@ bool stringComplete = false; //cuando el string esta completo
 bool rotacion = false;
 
 void setup() {
-  delay(3*1000);
   Serial.begin(250000);
   pinMode(4, INPUT);
   pinMode(5, INPUT);
@@ -28,6 +27,7 @@ void setup() {
   pinMode(11, OUTPUT);
   Serial.println("Introduce una direcion en codigo Gray 1 o 0 en el formato xxxx");
   inputString.reserve(200); //reserva 200 bytes para el string de entrada
+  delay(3000);
 }
 
 void loop() {
@@ -58,28 +58,15 @@ void loop() {
   
   //Rotacion
   if (rotacion) {
-    digitalWrite(8, steps[0][0]);
-    digitalWrite(9, steps[0][1]);
-    digitalWrite(10, steps[0][2]);
-    digitalWrite(11, steps[0][3]);
-    delay(espera);
-    digitalWrite(8, steps[1][0]);
-    digitalWrite(9, steps[1][1]);
-    digitalWrite(10, steps[1][2]);
-    digitalWrite(11, steps[1][3]);
-    delay(espera);
-    digitalWrite(8, steps[2][0]);
-    digitalWrite(9, steps[2][1]);
-    digitalWrite(10, steps[2][2]);
-    digitalWrite(11, steps[2][3]);
-    delay(espera);
-    digitalWrite(8, steps[3][0]);
-    digitalWrite(9, steps[3][1]);
-    digitalWrite(10, steps[3][2]);
-    digitalWrite(11, steps[3][3]);
-    delay(espera);
+    for(int i=0;i<=3;i++){
+      digitalWrite(8, steps[i][0]);
+      digitalWrite(9, steps[i][1]);
+      digitalWrite(10, steps[i][2]);
+      digitalWrite(11, steps[i][3]);
+      delay(espera);
+    }
   }
-
+  
   if (stringComplete) {
     Serial.println(inputString);
     //clearthestring:
