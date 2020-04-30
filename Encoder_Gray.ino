@@ -5,23 +5,19 @@ int steps[4][4] = {
   {0, 1, 1, 0},
   {1, 1, 0, 0}
 };
-//Matriz con la posicion de el encoder
-int pos[4];
-//String con la posicion de el encoder
-String poc="0000";
-//Margen de sensado
-int margen = 30;
-//Tiempo entre pasos
-int espera = 2;
-//String que guarda los datos enviados
-String inputString = "";
-String entrada ="0000";
 
-bool stringComplete = false; //whetherthestringiscomplete
+int pos[4]; //Matriz con la posicion de el encoder
+String poc="0000";  //String con la posicion de el encoder
+int margen = 100; //Margen de sensado
+int espera = 2; //Tiempo entre pasos
+String inputString = "";  //String que guarda los datos enviados
+String entrada ="0000";
+bool stringComplete = false; //cuando el string esta completo
 bool rotacion = false;
 
 void setup() {
-  Serial.begin(115200);
+  delay(3*1000);
+  Serial.begin(250000);
   pinMode(4, INPUT);
   pinMode(5, INPUT);
   pinMode(6, INPUT);
@@ -31,46 +27,35 @@ void setup() {
   pinMode(10, OUTPUT);
   pinMode(11, OUTPUT);
   Serial.println("Introduce una direcion en codigo Gray 1 o 0 en el formato xxxx");
-
-  //reserve200bytesfortheinputString:
-  inputString.reserve(200);
+  inputString.reserve(200); //reserva 200 bytes para el string de entrada
 }
 
 void loop() {
   posicion();
   Serial.print("Posicion a mantener: ");
   Serial.print(entrada);
-  Serial.print(" ");
+  Serial.print(" -> ");
   Serial.print("Posicion actual: ");
-//  Serial.print(pos[0]);
-//  Serial.print(" ");
-//  Serial.print(pos[1]);
-//  Serial.print(" ");
-//  Serial.print(pos[2]);
-//  Serial.print(" ");
-//  Serial.print(pos[3]);
-//  Serial.print("        ");
-//  Serial.print(analogRead(A0));
-//  Serial.print(" ");
-//  Serial.print(analogRead(A1));
-//  Serial.print("   ");
-//  Serial.print(analogRead(A2));
-//  Serial.print(" ");
-//  Serial.print(analogRead(A3));
-//  Serial.print(".");
   Serial.print(poc);
-  Serial.println(".");
+  Serial.print("\t || \t");  
 
-
-
-
-
-
-
-
-
-
-
+  Serial.print("Valores analogicos de los sensores: G1= ");
+  Serial.print(analogRead(A0));
+  Serial.print("=");
+  Serial.print(pos[0]);
+  Serial.print("\t| G2= ");
+  Serial.print(analogRead(A1));
+  Serial.print("=");
+  Serial.print(pos[1]);
+  Serial.print("\t| G3= ");
+  Serial.print(analogRead(A2));
+  Serial.print("=");
+  Serial.print(pos[2]);
+  Serial.print("\t| G4= ");
+  Serial.print(analogRead(A3));
+  Serial.print("=");
+  Serial.println(pos[3]);
+  
   //Rotacion
   if (rotacion) {
     digitalWrite(8, steps[0][0]);
@@ -141,16 +126,14 @@ void posicion() {
 //Entrada de datos
 void serialEvent() {
   while (Serial.available()) {
-    //getthenewbyte:
-    char inChar = (char)Serial.read();
+    char inChar = (char)Serial.read();  //recibe el byte nuevo
     if (inChar == '\n') {
       stringComplete = true;
       entrada=inputString;
       return;
     }
-    //addittotheinputString:
-    inputString += inChar;
-    //if the in coming character is a new line, set a flag so the main loop can
-    //do something about it:
-    }
+    inputString += inChar;//agregandolo a el string de entrada
+    //Si el caracter es uno de nueva linea, activa una vandera para que el loop principal pueda
+    //hacer algo con los datos recibidos
+  }
 }
